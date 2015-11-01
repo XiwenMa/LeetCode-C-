@@ -1,0 +1,36 @@
+//track two heights, one from the beginning, one from the end.
+//keep track the maximum area.
+//because the lowest height will limit the area, there is no need to move the heigher height.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param heights: a vector of integers
+     * @return: an integer
+     */
+    int maxArea(vector<int> &heights) {
+        // write your code here
+        int left = 0, right = heights.size()-1;
+        int maxA = 0;
+        
+        while (left < right)
+        {
+            maxA = max(maxA, min(heights[left], heights[right])*(right-left));
+            
+            if (heights[left] < heights[right])
+                left++;
+            else if (heights[left] > heights[right])
+                right--;
+            else
+                {
+                    left++;
+                    right--;
+                }
+        }
+    
+        return maxA;
+    }
+};
