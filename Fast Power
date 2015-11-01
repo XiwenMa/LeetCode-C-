@@ -1,0 +1,38 @@
+//Two cases to care: when n == 1 and n == 0
+//The number could be really large, try to make it as smaller as you can
+// a^(n)%b = a^(n/2) * a(n/2) % b if n is even
+// a^(2k+1)%b = ((a^(k) * a(k) % b)*a) % b if n is odd
+
+
+
+class Solution {
+public:
+    /*
+     * @param a, b, n: 32bit integers
+     * @return: An integer
+     */
+     
+    int helper(int a, int b, int n)
+    {
+        if (n == 1)
+            return (a%b);
+        
+        long half = helper(a, b, n/2);
+        long res = half * half % b;
+        
+        if (n % 2 != 0)
+            return (res*a) % b;
+            
+        return res;
+    }
+     
+    int fastPower(int a, int b, int n) {
+        // write your code here
+        if (n == 0)
+            return 1%b;
+        
+        int temp = helper(a, b, n);
+        
+        return temp;
+    }
+};
