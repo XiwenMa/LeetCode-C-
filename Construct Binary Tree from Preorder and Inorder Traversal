@@ -1,0 +1,71 @@
+//Note that for a pair of lists of inorder and preorder, the first number of postorder is always the root of the tree.
+//Recursively divide the tree into left subtree and right subtree by making the numbers before the root be the left subtree
+//and making the numbers after the root be the right subtree in the inorder list. Note that the leftsize and rightsize also 
+//can be applied to the preorder.
+//e.g. 
+// 1  2  3 |(4)| 5  6
+// (4)  L1  L2  L3 | R1  R2
+
+
+
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+ 
+
+class Solution {
+    /**
+     *@param preorder : A list of integers that preorder traversal of a tree
+     *@param inorder : A list of integers that inorder traversal of a tree
+     *@return : Root of a tree
+     */
+public:
+
+    TreeNode *helper(vector<int> &inorder, vector<int> &preorder, int f1,
+                    int t1, int f2, int t2)
+    {
+        if (f1>t1 || f2>t2)
+            return NULL;
+            
+        int rootIndex, rootVal = preorder[f2];
+        
+        TreeNode* root = new TreeNode(preorder[f2]);
+        
+        for (int i = f1; i <= t1; i++)
+        {
+            if (inorder[i] == rootVal)
+                {
+                    rootIndex = i;
+                    break;
+                }
+        }
+        
+        int leftSize = rootIndex - f1;
+        int rightSize = t1 - rootIndex;
+        
+        root->left = helper(inorder, preorder, f1, rootIndex-1, f2+1, f2+leftSize);
+        root->right = helper(inorder, preorder, rootIndex+1, t1, t2-rightSize+1, t2);
+        
+        return root;
+    }
+
+    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+        // write your code here
+        int size = preorder.size();
+        TreeNode *root;
+        
+        root = helper(inorder, preorder, 0, size-1, 0, size-1);
+        
+        return root;
+    }
+};
