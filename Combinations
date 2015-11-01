@@ -1,0 +1,47 @@
+//recursively add value to a temp vector by track the ramaining number of k.
+//if k left 0, means a combination of k numbers is done, push it to the res-vector.
+//if my startIndex is larger than n, meas there no number can be pushed into temp vector.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param n: Given the range of numbers
+     * @param k: Given the numbers of combinations
+     * @return: All the combinations of k numbers out of 1..n
+     */
+     
+    void helper(int n, int k, int startIndex, vector<vector<int>> &res, vector<int> &temp)
+    {
+        
+        if (k == 0)
+        {
+            res.push_back(temp);
+            return;
+        }
+        
+        if (startIndex > n)
+            return;
+        
+        for (int i = startIndex; i <= n; i++)
+        {
+            temp.push_back(i);
+            
+            helper(n, k-1, i+1, res, temp);
+            temp.pop_back();
+        }
+    }
+    
+    
+    vector<vector<int> > combine(int n, int k) {
+        // write your code here
+        vector<vector<int>> res;
+        vector<int> temp;
+        
+        helper(n, k, 1, res, temp);
+        
+        return res;
+    }
+};
