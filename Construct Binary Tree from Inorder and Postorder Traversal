@@ -1,0 +1,76 @@
+//Note that for a pair of lists of inorder and postorder, the last number of postorder is always the root of the tree.
+//Recursively divide the tree into left subtree and right subtree by making the numbers before the root be the left subtree
+//and making the numbers after the root be the right subtree in the inorder list. Note that the leftsize and rightsize also 
+//can be applied to the postorder.
+//e.g. 
+// 1  2  3 |(4)| 5  6
+// L1  L2  L3 | R1  R2 (4)
+
+
+
+
+/**
+ * Definition of TreeNode:
+ * class TreeNode {
+ * public:
+ *     int val;
+ *     TreeNode *left, *right;
+ *     TreeNode(int val) {
+ *         this->val = val;
+ *         this->left = this->right = NULL;
+ *     }
+ * }
+ */
+ 
+
+class Solution {
+    /**
+     *@param inorder : A list of integers that inorder traversal of a tree
+     *@param postorder : A list of integers that postorder traversal of a tree
+     *@return : Root of a tree
+     */
+public:
+
+    TreeNode* helper(vector<int> &inorder, vector<int> &postorder, int from1,
+                    int to1, int from2, int to2)
+    {  
+        if (from1>to1 || from2>to2)
+            return NULL;
+        
+        int rootIndex = -1;
+        int rootVal = postorder[to2];
+        
+        for (int i = from1; i <= to1; i++)
+            if (inorder[i] == rootVal)
+                {
+                    rootIndex = i;
+                    break;
+                }
+            
+
+        
+        TreeNode *root = new TreeNode(rootVal);
+        
+        int leftSize = rootIndex - from1;
+        int rightSize = to1 - rootIndex;
+        
+        root->left = helper(inorder, postorder, from1, rootIndex-1, from2, from2+leftSize-1);
+        root->right = helper(inorder, postorder, rootIndex+1, to1, to2-rightSize, to2-1);
+        
+        return root;
+    }
+    
+    TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
+        // write your code here
+        
+        TreeNode *root;
+        int i, size = inorder.size();
+        
+        if (inorder.size() == 0)
+            return NULL;
+            
+        root = helper(inorder, postorder, 0, size-1, 0, size-1);
+        
+        return root;
+    }
+};
