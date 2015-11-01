@@ -1,0 +1,49 @@
+//skip the list of numbers which added up is less than 0
+//e.g. 1,1,1,1,1,1,1,1,-500
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param A an integer array
+     * @return  A list of integers includes the index of 
+     *          the first number and the index of the last number
+     */
+    
+    
+    vector<int> continuousSubarraySum(vector<int>& A) {
+        // Write your code here
+        
+        vector<int> res;
+        int sum, total, i, left, right, startIndex;
+        
+        sum = INT_MIN;
+        total = 0;
+        startIndex = 0;
+        
+        for (i = 0; i < A.size(); i++)
+        {   
+            total += A[i];
+            
+            if (total > sum)
+            {
+                sum = total;
+                left = startIndex;
+                right = i;
+            }
+            
+            if (total < 0)
+            {
+                total = 0;
+                startIndex = i+1;
+            }
+        }
+        
+        res.push_back(left);
+        res.push_back(right);
+        
+        return res;
+    }
+};
