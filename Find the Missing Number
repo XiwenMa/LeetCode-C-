@@ -1,0 +1,50 @@
+//The challenge is to use O(1) extra memory and O(n) time.
+//Two solution: one is to sum all the numbers from 0 to num.size()+1, and substract the sum of all values of nums. 
+//The second one is to use bit operation. Notice that (A^B^C)^(A^B) = C, we XOR all numbers from 0 to num.size()+1,
+//and XOR all numbers in the vector nums. 
+
+
+class Solution {
+public:
+    /**    
+     * @param nums: a vector of integers
+     * @return: an integer
+     */
+    int findMissing(vector<int> &nums) {
+        // write your code here
+        int i;
+        long res;
+        
+        for(i = 0; i <= nums.size(); i++)
+            res += i;
+        
+        for(i = 0; i < nums.size(); i++)
+            res -= nums[i];
+        
+        return res;
+    }
+};
+
+
+
+
+
+class Solution {
+public:
+    /**    
+     * @param nums: a vector of integers
+     * @return: an integer
+     */
+    int findMissing(vector<int> &nums) {
+        // write your code here
+        int res = 0, i;
+        
+        for(i = 0; i <= nums.size(); i++)
+            res ^= i;
+        
+        for(i = 0; i < nums.size(); i++)
+            res ^= nums[i];
+        
+        return res;
+    }
+};
