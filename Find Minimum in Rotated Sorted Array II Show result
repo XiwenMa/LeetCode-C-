@@ -1,0 +1,44 @@
+//new case other than the first series: if num[from] == num[to]: still divide the vector.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param num: the rotated sorted array
+     * @return: the minimum number in the array
+     */
+     
+    void helper(vector<int> &num, int &res, int from, int to)
+    {
+        if (from == to)
+        {
+            res = min(res, num[from]);
+            return;
+        }
+        
+        if (num[from] < num[to])
+        {
+            res = min(res, num[from]);
+            return;
+        }
+        
+        if (num[from] >= num[to])
+        {
+            int mid = (to - from)/2;
+            helper(num, res, from, from+mid);
+            helper(num, res, from+mid+1, to);
+            return;
+        }
+    }
+     
+    int findMin(vector<int> &num) {
+        // write your code here
+        int res = INT_MAX;
+        
+        helper(num, res, 0, num.size()-1);
+        
+        return res;
+    }
+};
