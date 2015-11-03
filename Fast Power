@@ -1,7 +1,7 @@
 //Two cases to care: when n == 1 and n == 0
 //The number could be really large, try to make it as smaller as you can
-// a^(n)%b = a^(n/2) * a(n/2) % b if n is even
-// a^(2k+1)%b = ((a^(k) * a(k) % b)*a) % b if n is odd
+// a^(2k)%b = (a^(k)%b) * (a(k)%b) % b if n is even
+// a^(2k+1)%b = ((a^(k)%b) * (a^(k)%b)*a) % b if n is odd
 
 
 
