@@ -1,0 +1,45 @@
+// easy binary search question.
+// if the mid is the bad version, we check list before and include the mid to see if there is a bad version before mid.
+// if the mid is not the bad version, we check the list after the mid to find the first bad version.
+
+
+
+
+/**
+ * class SVNRepo {
+ *     public:
+ *     static bool isBadVersion(int k);
+ * }
+ * you can use SVNRepo::isBadVersion(k) to judge whether 
+ * the kth code version is bad or not.
+*/
+class Solution {
+public:
+    /**
+     * @param n: An integers.
+     * @return: An integer which is the first bad version.
+     */
+    int findFirstBadVersion(int n) {
+        // write your code here
+        
+        int left, right, mid;
+        left = 1;
+        right = n;
+        
+        if (left == right)
+            return left;
+        
+        while(left < right)
+        {
+            mid = left + (right-left)/2;
+            
+            if (SVNRepo::isBadVersion(mid))
+                right = mid;
+            else
+                left = mid+1;
+        }
+        
+        return left;
+    }
+};
+
