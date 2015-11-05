@@ -1,0 +1,40 @@
+// Why A[A[i]-1] != A[i]? in case of duplicate
+// e.g. [1, 1]
+// Why A[i] <= A.size()? in case outlier
+// e.g. [-1, 4, 2, 1, 9, 10], the size is 6, if A[i] > 6 we don't care.
+// why i-- for each loop? sort algorithm(?)
+// e.g. [3, 4, -1, 1]
+//    =>[-1, 4, 3, 1]
+//    =>[-1, 1, 3, 4] if we dont compute the index 1 again, the 1 will be permanent in index 1 which is wrong.
+//    =>[1, -1, 3, 4] now we find the wrong index which is 1.
+
+
+
+
+class Solution {
+public:
+    /**    
+     * @param A: a vector of integers
+     * @return: an integer
+     */
+    int firstMissingPositive(vector<int> A) {
+        // write your code here
+        int i;
+        
+        for (i = 0; i < A.size(); i++)
+        {
+            if (A[i]>0 && A[A[i]-1]!=A[i] && A[i]!=i+1 && A[i] <= A.size())
+                {
+                    swap(A[i], A[A[i]-1]);
+                    i--;
+                }
+        }
+        
+        for (i = 0; i < A.size(); i++)
+            if (A[i] != i+1)
+                return i + 1;
+            
+        return A.size()+1;
+        
+    }
+};
