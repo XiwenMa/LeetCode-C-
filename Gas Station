@@ -1,6 +1,7 @@
 // First loop: find any node satisfies the requirement.
 // Second loop: check if the found node has its previous nodes from 0 to its index, satisfies the requirement.
-// Since the solution is promised to be unique, I suppose the node I found in the first loop is the solution.
+// Since the solution is promised to be unique, I can suppose the first node I found that satisfies the requirement from
+// its index to the end is the unique solution. 
 
 
 
