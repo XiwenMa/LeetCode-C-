@@ -1,0 +1,53 @@
+// First loop: find any node satisfies the requirement.
+// Second loop: check if the found node has its previous nodes from 0 to its index, satisfies the requirement.
+// Since the solution is promised to be unique, I suppose the node I found in the first loop is the solution.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param gas: a vector of integers
+     * @param cost: a vector of integers 
+     * @return: an integer 
+     */
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        // write your code here
+        
+        int save = 0;
+        int temp = -1;
+        bool start = true;
+        
+        for (int i = 0; i < cost.size(); i++)
+        {
+            if (save + gas[i] < cost[i])
+            {
+                save = 0;
+                temp = -1;
+                start = true;
+            }
+            
+            else if (save + gas[i] >= cost[i])
+            {
+                save = save + gas[i] - cost[i];
+                
+                if (start == true)
+                {
+                    temp = i;
+                    start = false;
+                }
+            }
+        }
+        
+        for (int i = 0; i < temp; i++)
+        {
+            if (save + gas[i] >= cost[i])
+                save = save + gas[i] - cost[i];
+            else 
+                return -1;
+        }
+        
+        return temp;
+    }
+};
