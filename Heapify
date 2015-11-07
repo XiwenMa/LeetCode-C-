@@ -1,0 +1,46 @@
+// compute from the mid to the first, using the travelDown algorithm
+// get the smallest element of a heap of three and make swap if needed
+// then recursively travel down untill it gets to the appropriate position.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param A: Given an integer array
+     * @return: void
+     */
+     
+    void travelDown(vector<int> &A, int i)
+    {
+        while (i < A.size())
+        {
+            int smallest = i;
+            
+            if (i*2+1 < A.size() && A[smallest] > A[i*2+1])
+                smallest = i*2+1;
+            
+            if (i*2+2 < A.size() && A[smallest] > A[i*2+2])
+                smallest = i*2+2;
+                
+            if (smallest == i)
+                break;
+                
+            int temp = A[smallest];
+            A[smallest] = A[i];
+            A[i] = temp;
+            
+            i = smallest;
+        }
+    }
+     
+    void heapify(vector<int> &A) {
+        // write your code here
+        
+        for (int i = A.size()/2; i >= 0; i--)
+        {
+            travelDown(A, i);
+        }
+    }
+};
