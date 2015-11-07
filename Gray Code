@@ -1,0 +1,35 @@
+// n = 0: 0
+// n = 1: 0, 1
+// n = 2: 00, 01, 11, 10
+// n = 3: 000, 001, 011, 010, 110, 111, ,101, 100
+// vector of n = vector of (n-1) + reversed order of numbers in vector of (n-1) + 1 << (n-1)
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param n a number
+     * @return Gray code
+     */
+     
+    vector<int> grayCode(int n) {
+        // Write your code here
+        
+        vector<int> temp;
+        temp.push_back(0);
+        
+        for (int i = 1; i <= n; i++)
+        {
+            int size = temp.size();
+            
+            for (int j = size-1; j >= 0; j--)
+            {
+                temp.push_back(temp[j] + (1 << (i-1)));   
+            }
+        }
+        
+        return temp;
+    }
+};
