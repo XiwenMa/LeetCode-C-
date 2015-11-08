@@ -1,0 +1,65 @@
+// push all element into stack1.
+// when we compute pop or top, we push the elements from stack1 into stack2 from the top,
+// thus all elements in stack2 is in FIFO order.
+// for later pop or top, we first check if stack2 is empty, if not, we directly pop or top the lement from the top of stack2.
+// if stack2 is empty, we then recursively push elements from stack1 into stack2.
+
+
+
+
+class Queue {
+public:
+    stack<int> stack1;
+    stack<int> stack2;
+
+    Queue() {
+        // do intialization if necessary
+    }
+
+    void push(int element) {
+        // write your code here
+        stack1.push(element);
+    }
+    
+    int pop() {
+        // write your code here
+        if (!stack2.empty())
+        {
+            int temp = stack2.top();
+            stack2.pop();
+            return temp;
+        }
+        
+        if (stack2.empty())
+        {
+            while (!stack1.empty())
+            {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+            int temp = stack2.top();
+            stack2.pop();
+            return temp;
+        }
+    }
+
+    int top() {
+        // write your code here
+        if (!stack2.empty())
+        {
+            return stack2.top();
+        }
+        
+        if (stack2.empty())
+        {
+            while (!stack1.empty())
+            {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+            
+            return stack2.top();
+        }
+    }
+};
+
