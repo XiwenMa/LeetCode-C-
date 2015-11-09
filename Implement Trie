@@ -1,0 +1,88 @@
+// tree with 26 subtrees.
+
+
+
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie trie;
+ * trie.insert("lintcode");
+ * trie.search("lint"); will return false
+ * trie.startsWith("lint"); will return true
+ */
+class TrieNode {
+public:
+    // Initialize your data structure here.
+    TrieNode() {
+        key = false;
+        
+        for (int i = 0; i < 26; i++)
+            children[i] = NULL;
+    }
+    TrieNode* children[26];
+    bool key;
+};
+
+class Trie {
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    // Inserts a word into the trie.
+    void insert(string word) {
+        
+        TrieNode* cur = root;
+        
+        for (int i = 0; i < word.length(); i++)
+        {
+            if (cur->children[word[i]-97] == NULL)
+            {
+                cur->children[word[i]-97] = new TrieNode();
+            }                
+            
+            cur = cur->children[word[i]-97];
+        }
+        
+        cur->key = true;
+        
+    }
+
+    // Returns if the word is in the trie.
+    bool search(string word) {
+        TrieNode* cur = root;
+        
+        for (int i = 0; i < word.length(); i++)
+        {
+            if (cur->children[word[i]-97] == NULL)
+                return false;
+            
+            cur = cur->children[word[i]-97];
+        }
+        
+        if (cur->key)
+            return true;
+            
+        return false;
+        
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    bool startsWith(string prefix) {
+        TrieNode* cur = root;
+        
+        for (int i = 0; i < prefix.length(); i++)
+        {
+            if (cur->children[prefix[i]-97] == NULL)
+                return false;
+            
+            cur = cur->children[prefix[i]-97];
+        }
+        
+        return true;
+    }
+
+private:
+    TrieNode* root;
+};
