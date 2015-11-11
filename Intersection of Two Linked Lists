@@ -1,0 +1,63 @@
+// count the numbers of two linked list, make the longer one short as the other one by head = head->next
+// while nodes != NULL, we check if there is an node from each linked list the same, or we return NULL after the for loop.
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    /**
+     * @param headA: the first list
+     * @param headB: the second list
+     * @return: a ListNode
+     */
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        // write your code here
+        int sizeA;
+        int sizeB;
+        
+        ListNode* temp = headA;
+        
+        for (sizeA = 0; temp != NULL; sizeA++)
+            temp = temp->next;
+            
+        temp = headB;
+        
+        for (sizeB = 0; temp != NULL; sizeB++)
+            temp = temp->next;
+        
+        if (sizeA > sizeB)
+        {
+            for (int i = 0; i < sizeA-sizeB; i++)
+                headA = headA->next;
+        }
+        
+        else if (sizeA < sizeB)
+        {
+            for (int i = 0; i < sizeB-sizeA; i++)
+                headB = headB->next;
+        }
+        
+        for (int i = 0; headA != NULL && headB != NULL; i++)
+        {
+            if (headA == headB)
+                return headA;
+                
+            else
+            {
+                headA = headA->next;
+                headB = headB->next;
+            }
+        }
+        
+        return NULL;
+    }
+};
