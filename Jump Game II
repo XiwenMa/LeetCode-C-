@@ -1,0 +1,43 @@
+// track the maximum among ( A[index], A[index+A[index]] ] instead of directly taking the value of A[index].
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param A: A list of lists of integers
+     * @return: An integer
+     */
+    int jump(vector<int> A) {
+        // wirte your code here
+        int count = 0, index = 0, maxI;
+        
+        
+        while (index < A.size())
+        {
+            maxI = 0;
+            
+            int temp = index + A[index];
+            
+            if (temp >= A.size()-1)
+            {
+                count++;
+                break;
+            }
+            
+            for (int i = index+1; i <= temp && i < A.size(); i++)
+            {
+                if (A[i] > maxI)
+                {
+                    index = i;
+                    maxI = A[i];
+                }
+            }
+                
+            count++;
+        }
+        
+        return count;
+    }
+};
