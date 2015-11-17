@@ -1,0 +1,35 @@
+// greedy case: if plus the value is larger than or equal to the size, return true;
+// if plus the value get a value of 0, and the current value is not 1, take the value-1;
+// other conditions result a false;
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param A: A list of integers
+     * @return: The boolean answer
+     */
+    bool canJump(vector<int> A) {
+        // write you code here
+        int index = 0;
+        
+        while (A[index] != 0 && index < A.size())
+        {
+            if (index+A[index] == A.size()-1)
+                return true;
+            
+            else if (A[index+A[index]] == 0 && A[index] !=1)
+                index = index + A[index] - 1;
+            else
+                index += A[index];
+        }
+        
+        if (index >= A.size())
+            return true;
+            
+        return false;
+    }
+};
+
