@@ -1,0 +1,60 @@
+// require the runtime is O(n), thus we use the quick sort which has a average of runtime is O(n)
+// Quick Sort: find the pivot in the middle of the vector first.
+// start from the left and the right, noted i and j. 
+// If (nums[i]>pivot) or (pivot>nums[j]), it means the order is wrong, we just swap nums[i] and nums[j]
+// when i > j, we recursively quick sort two part if i doesn't reach left or j doesn't reach right.
+
+
+
+
+class Solution {
+public:
+    /*
+     * param k : description of k
+     * param nums : description of array and index 0 ~ n-1
+     * return: description of return
+     */
+     
+    void quicksort(vector<int> &nums, int left, int right)
+    {
+        int i = left, j = right;
+        int pivot = nums[left+(right-left)/2];
+        
+        while (i <= j)
+        {
+            while (nums[i] < pivot)
+                i++;
+                
+            while (nums[j] > pivot)
+                j--;
+                
+            if (i <= j)
+            {
+                swap(nums[i], nums[j]);
+                i++;
+                j--;
+            }
+        }
+        
+        if (left < j)
+            quicksort(nums, left, j);
+        
+        if (i < right)
+            quicksort(nums, i, right);
+        
+    }
+     
+    int kthLargestElement(int k, vector<int> nums) {
+        // write your code here
+        
+        quicksort(nums, 0, nums.size()-1);
+        
+        for (int i = nums.size()-1; i >= 0; i--)
+        {
+            k--;
+            
+            if (k == 0)
+                return nums[i];
+        }
+    }
+};
