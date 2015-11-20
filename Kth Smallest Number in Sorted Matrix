@@ -1,9 +1,9 @@
-// use a min_heap by a priority_queue<int, vector<int>, greater<int>>.
+// use a min_heap by a priority_queue<Node, vector<Node>, greater<Node>>.
+// overload the operator > in class Node, *make the function and its variable const!
 // first push all the element in the first row into the heap.
-// in the for loop, we pop out the root and push all elements of the following row into the heap, which is to delete the min.
+// in the for loop, we pop out the root and push the element below the root(in the matrix) into the heap.
+// if there is no element below the root(in the matrix), we don't push anything.
 // after pop out k-1 times, we now have our target in the root, which is the k-th minimum number. 
-// (k should be larger than 1 so that the number we want won't be popped out)
-// (k-1) may be still larger than the size of matrix, which need extra operations to pop.
 
 
 
@@ -15,29 +15,56 @@ public:
      * @param k: an integer
      * @return: the kth smallest number in the matrix
      */
+     
+    class Node
+    {
+        public:
+            int val;
+            int x;
+            int y;
+            
+            Node(int va, int xp, int xy)
+            {
+                val = va;
+                x = xp;
+                y = xy;
+            }
+            
+
+            bool operator > (const Node& obj) const
+            {
+                return (val > obj.val);
+            }
+    };
+     
+     
     int kthSmallest(vector<vector<int> > &matrix, int k) {
         // write your code here
-        priority_queue<int, vector<int>, greater<int>> heap;
+        priority_queue<Node, vector<Node>, greater<Node>> heap;
         
         int rowSize = matrix[0].size();
+        int colSize = matrix.size();
+        int temp, i;
+        //map<int, vector<int>> where;
         
-        for (int i = 0; i < rowSize; i++)
-            heap.push(matrix[0][i]);
+        for (i = 0; i < rowSize; i++)
+            heap.push(Node(matrix[0][i], 0, i));
             
-        for (int i = 1; k > 1 && i < matrix.size(); i++, k--)
+        for (i = 1; i < k ; i++)
         {
+            Node temp = heap.top();
             heap.pop();
             
-            for (int j = 0; j < rowSize; j++)
-                heap.push(matrix[i][j]);
+            if (temp.x + 1 < colSize)
+            {
+                int prevrow = temp.x;
+                int prevcol = temp.y;
+                
+                heap.push(Node(matrix[prevrow+1][prevcol], prevrow+1, prevcol));
+            }
+                
         }
         
-        while (k > 1)
-        {
-            heap.pop();
-            k--;
-        }
-        
-        return heap.top();
+        return heap.top().val;
     }
 };
