@@ -1,0 +1,40 @@
+// greedy alg: we only need to "overload" the third function of sort, which determines how to order strings.
+// If s1 + s2 > s2 + s1, return true. 
+// e.g. a) 3, 40 -> 403>340
+// b) 3, 30 -> 330 > 303
+
+
+
+
+class Solution {
+public:
+    /**
+     *@param num: A list of non negative integers
+     *@return: A string
+     */
+     
+    static bool compare(const string &s1, const string &s2)
+    {
+        return s1+s2 > s2+s1;
+    }
+     
+    string largestNumber(vector<int> &num) {
+        // write your code here
+        
+        vector<string> token;
+        string res;
+        
+        for (int i = 0; i < num.size(); i++)
+            token.push_back(to_string(num[i]));
+        
+        sort(token.begin(), token.end(), compare);
+        
+        for (int i = 0; i < num.size(); i++)
+            res += token[i];
+            
+        while (res[0] == '0' && res.size() != 1)
+            res = res.substr(1);
+            
+        return res;
+    }
+};
