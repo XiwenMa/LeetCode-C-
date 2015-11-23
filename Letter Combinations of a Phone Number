@@ -1,0 +1,51 @@
+// Similar with the Combination Sum.
+// Note: char to int: if it is an integet, use char - '0' instead of atoi
+// int atoi (const char * str); which is char pointer.
+
+
+
+
+class Solution {
+public:
+    /**
+     * @param digits A digital string
+     * @return all posible letter combinations
+     */
+     
+    void helper(vector<string> &res, string &digits, int k, int size, string &temp, string what[])
+    {
+        if (k == size)
+        {
+            res.push_back(temp);
+            return;
+        }
+        
+        for (int i = 0; i < what[(digits[k]-'0')].size(); i++)
+        {
+            string temp2 = temp;
+            temp += what[(digits[k])-'0'][i];
+            
+            helper(res, digits, k+1, size, temp, what);
+            
+            temp = temp2;
+        }
+    
+    }
+    
+    
+    vector<string> letterCombinations(string& digits) {
+        // Write your code here
+        int size = digits.length();
+        vector<string> res;
+        string what[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        
+        string temp;
+        
+        if (size == 0)
+            return res;
+        
+        helper(res, digits, 0, size, temp, what);
+        
+        return res;
+    }
+};
