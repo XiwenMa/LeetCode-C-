@@ -1,0 +1,55 @@
+// find the least length of strings in the vector.
+// check if a char can be the prefix of these strings from the first element to the minLen-th elemnt.
+// if we find one char that is not, return res.
+// char to string: stringstream is; is << (char)temp; is >> (string)res;
+
+
+
+
+class Solution {
+public:    
+    /**
+     * @param strs: A list of strings
+     * @return: The longest common prefix
+     */
+    string longestCommonPrefix(vector<string> &strs) {
+        // write your code here
+        string res = "";
+        bool check;
+        char temp;
+        int minLen = INT_MAX;
+        stringstream is;
+        
+        for(int i = 0; i < strs.size(); i++)
+        {
+            minLen = min(minLen, (int)strs[i].length());
+        }
+        
+        if (minLen == INT_MAX)
+            return res;
+        
+        for (int i = 0; i < minLen; i++)
+        {
+            check = true;
+            temp = strs[0][i];
+            
+            for (int j = 1; j < strs.size(); j++)
+            {
+                if (strs[j][i] != temp)
+                    check = false;
+            }
+            
+            if (check)
+            {
+                is << temp;
+            }
+
+            else 
+                break;
+        }
+        
+        is >> res; 
+        
+        return res;
+    }
+};
